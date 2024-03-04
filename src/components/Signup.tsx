@@ -13,9 +13,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { signupSchema } from "@/lib/validations/main";
 import Branding from "./Branding";
-import ToggleTheme from "./ToggleTheme";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useToast } from "./ui/use-toast";
+import { ToastAction } from "./ui/toast";
 
 const Signup = () => {
   const form = useForm<z.infer<typeof signupSchema>>({
@@ -28,20 +29,54 @@ const Signup = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof signupSchema>) {
-    axios.post("http://localhost:3000/api/v1/user/signup", values);
+  const { toast } = useToast();
+  const navigate = useNavigate();
+
+  async function onSubmit(values: z.infer<typeof signupSchema>) {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/user/signup",
+        values
+      );
+      localStorage.setItem("token", response?.data?.token);
+      toast({
+        description: "Account has been created successfully",
+        className: "bg-green-800",
+      });
+      navigate("/");
+    } catch (error: any) {
+      error?.response?.status === 409
+        ? toast({
+            variant: "destructive",
+            title: "E-mail is already registered.",
+            action: (
+              <ToastAction
+                altText="Try again"
+                className="text-md font-bold"
+                onClick={() => navigate("/signin")}
+              >
+                Try Signing In
+              </ToastAction>
+            ),
+          })
+        : toast({
+            variant: "destructive",
+            title: "Internal Server Error",
+            description: "We'll come back shortly",
+          });
+    }
   }
+
   return (
     <Form {...form}>
-      <ToggleTheme />
-      <div className="flex flex-col items-center gap-6 w-1/4 py-4 rounded-lg shadow-md shadow-slate-600">
-        <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-5 w-1/4 py-4 rounded-xl shadow-[0_2px_20px_rgb(0,0,0,0.12)] shadow-slate-800">
+        <div className="flex flex-col gap-2">
           <Branding />
           <p>Where every transaction feels right</p>
         </div>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 w-8/12"
+          className="flex flex-col gap-4 w-8/12"
         >
           <FormField
             control={form.control}
@@ -112,7 +147,7 @@ const Signup = () => {
             )}
           />
           <Button type="submit" className="dark:text-secondary-foreground">
-            Submit
+            Sign up
           </Button>
           <p>
             Already have an account?

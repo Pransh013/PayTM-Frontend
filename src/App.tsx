@@ -5,13 +5,15 @@ import Footer from "./components/Footer";
 import Auth from "./pages/Auth";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
+import SendMoney from "./pages/SendMoney";
+import History from "./pages/History";
 
 function App() {
   return (
     <>
       <Header />
-      <Outlet/>
-      <Footer/>
+      <Outlet />
+      <Footer />
     </>
   );
 }
@@ -19,27 +21,35 @@ function App() {
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: "/",
-        element: <Home/>
+        element: <Home />,
       },
-    ]
-  }, {
+      {
+        path: "/send",
+        element: <SendMoney />,
+      },
+      {
+        path: "/history",
+        element: <History />,
+      },
+    ],
+  },
+  {
     element: <Auth />,
     children: [
       {
         path: "/signin",
-        element: <Signin/>
+        element: <Signin />,
       },
       {
         path: "/signup",
-        element: <Signup/>
+        element: <Signup />,
       },
-
-    ]
-  }
-])
+    ],
+  },
+]);
 
 export default appRouter;
