@@ -21,3 +21,7 @@ export const signinSchema = zod.object({
     .string()
     .min(6, { message: "Must be 6 or more characters long" }),
 });
+
+export const amountSchema = zod.object({
+  amount: zod.coerce.number().positive()
+});

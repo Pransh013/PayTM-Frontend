@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import Branding from "./Branding";
 import ToggleTheme from "./ToggleTheme";
-
 import UserAvatar from "./UserAvatar";
 
 const Header = () => {
@@ -13,7 +12,7 @@ const Header = () => {
           <Branding />
         </Link>
         <div className="flex items-center gap-28">
-          <div className="flex gap-12 items-center text-primary-foreground dark:text-secondary-foreground text-xl font-semibold ">
+          <div className="flex gap-10 items-center text-primary-foreground dark:text-secondary-foreground text-xl font-semibold ">
             <Link to={"/"}>
               <p
                 className={` ${
@@ -45,6 +44,17 @@ const Header = () => {
                 }`}
               >
                 Check History
+              </p>
+            </Link>
+            <Link to={"/balance"}>
+              <p
+                className={` ${
+                  location.pathname === "/balance"
+                    ? "underline-effect-active underline-effect"
+                    : "underline-effect"
+                }`}
+              >
+                Check Balance
               </p>
             </Link>
           </div>

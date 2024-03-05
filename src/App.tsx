@@ -7,6 +7,8 @@ import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import SendMoney from "./pages/SendMoney";
 import History from "./pages/History";
+import Balance from "./pages/Balance";
+import Transfer from "./pages/Transfer";
 
 function App() {
   return (
@@ -34,6 +36,14 @@ const appRouter = createBrowserRouter([
       {
         path: "/history",
         element: <History />,
+      },
+      {
+        path: "/balance",
+        element: <Balance />,
+      },
+      {
+        path: "/transfer",
+        element: <Transfer />,
       },
     ],
   },
