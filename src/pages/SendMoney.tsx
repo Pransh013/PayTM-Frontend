@@ -50,7 +50,7 @@ const SendMoney = () => {
 
   return (
     <>
-      <div className="pt-20 px-40 flex flex-col w-full gap-12">
+      <div className="pt-20 px-40 flex flex-col w-full h-screen gap-12">
         <div className="flex w-full items-center gap-24">
           <Input
             type="text"
@@ -61,6 +61,7 @@ const SendMoney = () => {
           <Button
             type="button"
             className="py-6 px-8 text-lg font-semibold dark:text-secondary-foreground"
+            onClick={getUsers}
           >
             Search User
           </Button>

@@ -39,7 +39,7 @@ const Transfer = () => {
 
   async function onSubmit(values: z.infer<typeof amountSchema>) {
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:3000/api/v1/account/transfer",
         { to: receiverId, amount: values.amount },
         { headers }
