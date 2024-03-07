@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Balance = () => {
   const [balance, setBalance] = useState(0);
-
+  const navigate = useNavigate()
   const token = localStorage.getItem("token");
+  if(!token) {
+    navigate('/signin')
+  }
   const headers = token ? { Authorization: "Bearer " + token } : {};
   useEffect(() => {
     getBalance();
